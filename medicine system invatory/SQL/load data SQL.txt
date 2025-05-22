@@ -1,0 +1,46 @@
+-- Insert sample doctors
+INSERT INTO Doctor (doctor_id, doctor_name, qualification, specialization)
+VALUES 
+(1, 'Dr. Sarah Ahmed', 'MBBS, MD', 'Cardiology'),
+(2, 'Dr. Omar Nabil', 'MBBS, MD', 'Neurology'),
+(3, 'Dr. Hana Youssef', 'MBBS', 'General Medicine');
+
+-- Insert sample diseases
+INSERT INTO Disease (disease_id, disease_name, disease_type)
+VALUES
+(1, 'Anemia', 'deficiency'),
+(2, 'COVID-19', 'infectious'),
+(3, 'Hemophilia', 'genetic hereditary');
+
+-- Insert sample medicines
+INSERT INTO Medicine (medicine_id, medicine_name, manufacture_date, expiry_date, price, dosage)
+VALUES
+(101, 'Paracetamol', '2024-01-01', '2026-01-01', 2.50, '500mg'),
+(102, 'Vitamin B12', '2023-12-01', '2025-12-01', 3.00, '1000mcg'),
+(103, 'Remdesivir', '2024-02-15', '2025-08-15', 25.00, '100mg');
+
+-- Insert sample prescriptions
+INSERT INTO Prescription (prescription_id, doctor_id, patient_name, issue_date)
+VALUES
+(1001, 1, 'Amina Khaled', '2024-05-10'),
+(1002, 2, 'Mohamed Fathy', '2024-05-15');
+
+-- Insert medicines used in prescriptions
+INSERT INTO Prescription_Medicine (prescription_id, medicine_id, quantity)
+VALUES
+(1001, 101, 2),
+(1001, 102, 1),
+(1002, 103, 1);
+
+-- Link medicines to diseases
+INSERT INTO Medicine_Disease (medicine_id, disease_id)
+VALUES
+(101, 1),
+(102, 1),
+(103, 2);
+
+-- Insert blank bills (trigger will update total)
+INSERT INTO Bill (bill_id, prescription_id, tax, discount, total)
+VALUES
+(1, 1001, 1.00, 0.50, 0.00),
+(2, 1002, 2.00, 0.00, 0.00);

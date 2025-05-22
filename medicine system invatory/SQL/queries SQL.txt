@@ -1,0 +1,18 @@
+SELECT Name
+FROM Doctor
+WHERE Specialization LIKE '%heart%';
+
+
+SELECT DiseaseName
+FROM Disease
+WHERE DiseaseType = 'deficiency';
+
+
+SELECT M.MedicineName, SUM(PM.Quantity) AS TotalSold
+FROM Prescription P
+JOIN Prescription_Medicine PM ON P.PrescriptionID = PM.PrescriptionID
+JOIN Medicine M ON PM.MedicineID = M.MedicineID
+WHERE YEAR(P.IssueDate) = 2023
+GROUP BY M.MedicineID
+ORDER BY TotalSold DESC
+LIMIT 1;

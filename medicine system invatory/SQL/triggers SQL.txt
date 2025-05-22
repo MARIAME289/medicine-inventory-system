@@ -1,0 +1,24 @@
+DELIMITER //
+
+CREATE TRIGGER Calculate_Bill_Total
+AFTER INSERT ON Prescription_Medicine
+FOR EACH ROW
+BEGIN
+  DECLARE total_price DECIMAL(10,2);
+
+  -- Compute the total price from the Prescription_Medicine table
+  SELECT SUM(Medicine.Price * Prescription_Medicine.Quantity)
+  INTO total_price
+  FROM Prescription_Medicine
+  JOIN Medicine ON Prescription_Medicine.MedicineID = Medicine.MedicineID
+  WHERE Prescription_Medicine.PrescriptionID = NEW.PrescriptionID;
+
+  -- Update the Bill table with the calculated total
+  UPDATE Bill
+  SET Total = total_price + IFNULL(Tax, 0) - IFNULL(Discount, 0)
+  WHERE PrescriptionID = NEW.PrescriptionID;
+END;
+//
+
+DELIMITER ;
+
